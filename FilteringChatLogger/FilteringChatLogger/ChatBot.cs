@@ -52,27 +52,27 @@ namespace FilteringChatLogger
         private void OnLogHandler(object sender, OnLogArgs e)
         {
             _logHandlerTimer.Start();
-            _logStreamWriter.WriteLine($"{e.DateTime.ToString(CultureInfo.InvariantCulture)}: {e.BotUsername} - {e.Data}");
+            _logStreamWriter.WriteLine($"[{e.DateTime:O}] {e.BotUsername} - {e.Data}");
             _logStreamWriter.Flush();
             _logHandlerTimer.Stop();
         }
 
         private void OnConnectedHandler(object sender, OnConnectedArgs e)
         {
-            _chatStreamWriter.WriteLine($"-- Connected to {e.AutoJoinChannel}.");
+            _chatStreamWriter.WriteLine($"[{DateTime.Now:O}] Connected to {e.AutoJoinChannel}.");
             _chatStreamWriter.Flush();
         }
 
         private void OnJoinedChannelHandler(object sender, OnJoinedChannelArgs e)
         {
-            _chatStreamWriter.WriteLine($"-- Joined the channel {e.Channel}.");
+            _chatStreamWriter.WriteLine($"[{DateTime.Now:O}] Joined the channel {e.Channel}.");
             _chatStreamWriter.Flush();
         }
 
         private void OnMessageReceivedHandler(object sender, OnMessageReceivedArgs e)
         {
             _messageReceivedHandlerTimer.Start();
-            _chatStreamWriter.WriteLine($"{e.ChatMessage.Username}: {e.ChatMessage.Message}");
+            _chatStreamWriter.WriteLine($"[{DateTime.Now:O}] {e.ChatMessage.Username}: {e.ChatMessage.Message}");
             _chatStreamWriter.Flush();
             _messageReceivedHandlerTimer.Stop();
         }
@@ -80,7 +80,7 @@ namespace FilteringChatLogger
         private void OnWhisperReceivedHandler(object sender, OnWhisperReceivedArgs e)
         {
             _whisperReceivedHandlerTimer.Start();
-            _chatStreamWriter.WriteLine($"{e.WhisperMessage.Username}: {e.WhisperMessage.Message}");
+            _chatStreamWriter.WriteLine($"[{DateTime.Now:O}] {e.WhisperMessage.Username}: {e.WhisperMessage.Message}");
             _chatStreamWriter.Flush();
             _whisperReceivedHandlerTimer.Stop();
         }
