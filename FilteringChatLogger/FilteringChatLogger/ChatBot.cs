@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
@@ -12,12 +11,12 @@ namespace FilteringChatLogger
     internal class ChatBot
     {
         private const string TextFileExtension = ".txt";
-
         private readonly StreamWriter _chatStreamWriter;
 
         private readonly TwitchClient _client;
 
         private readonly SectionTimer _logHandlerTimer = new SectionTimer("OnLogHandler");
+
         private readonly StreamWriter _logStreamWriter;
         private readonly SectionTimer _messageReceivedHandlerTimer = new SectionTimer("OnMessageReceivedHandler");
         private readonly SectionTimer _whisperReceivedHandlerTimer = new SectionTimer("OnWhisperReceivedHandler");

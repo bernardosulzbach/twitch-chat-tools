@@ -16,9 +16,8 @@ namespace FilteringChatLogger
         public static string FormatTimespan(ulong nanoseconds)
         {
             foreach (var unit in Units)
-            {
-                if (nanoseconds / unit.RatioToSecond < 1000) return unit.Format(nanoseconds);
-            }
+                if (nanoseconds / unit.RatioToSecond < 1000)
+                    return unit.Format(nanoseconds);
 
             return Units.Last().Format(nanoseconds);
         }
