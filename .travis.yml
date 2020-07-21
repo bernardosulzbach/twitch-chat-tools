@@ -1,0 +1,9 @@
+language: csharp
+dist: bionic # Ubuntu 18.04
+mono: none
+dotnet: 3.1
+install:
+  - cd FilteringChatLogger || exit 1
+script:
+  # This restores the solution and builds it too.
+  - dotnet test --verbosity detailed
