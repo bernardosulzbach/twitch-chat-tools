@@ -1,0 +1,9 @@
+bin/
+obj/
+
+settings.json
+
+*DotSettings.user
+
+log/
+chat/
