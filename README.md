@@ -2,4 +2,4 @@
 
 ## FilteringChatLogger
 
-This tool logs live Twitch chat to a text file.
+A C# application that logs live Twitch chat to a text file.
