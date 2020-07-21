@@ -14,9 +14,13 @@ namespace FilteringChatLogger
         private const string TextFileExtension = ".txt";
 
         private readonly StreamWriter _chatStreamWriter;
+
         private readonly TwitchClient _client;
 
+        private readonly SectionTimer _logHandlerTimer = new SectionTimer("OnLogHandler");
         private readonly StreamWriter _logStreamWriter;
+        private readonly SectionTimer _messageReceivedHandlerTimer = new SectionTimer("OnMessageReceivedHandler");
+        private readonly SectionTimer _whisperReceivedHandlerTimer = new SectionTimer("OnWhisperReceivedHandler");
 
         public ChatBot(in Settings settings, string channel)
         {
@@ -47,15 +51,16 @@ namespace FilteringChatLogger
 
         private void OnLogHandler(object sender, OnLogArgs e)
         {
+            _logHandlerTimer.Start();
             _logStreamWriter.WriteLine($"{e.DateTime.ToString(CultureInfo.InvariantCulture)}: {e.BotUsername} - {e.Data}");
             _logStreamWriter.Flush();
+            _logHandlerTimer.Stop();
         }
 
         private void OnConnectedHandler(object sender, OnConnectedArgs e)
         {
             _chatStreamWriter.WriteLine($"-- Connected to {e.AutoJoinChannel}.");
             _chatStreamWriter.Flush();
-            // TODO: Time these and write to the logs
         }
 
         private void OnJoinedChannelHandler(object sender, OnJoinedChannelArgs e)
@@ -66,20 +71,27 @@ namespace FilteringChatLogger
 
         private void OnMessageReceivedHandler(object sender, OnMessageReceivedArgs e)
         {
+            _messageReceivedHandlerTimer.Start();
             _chatStreamWriter.WriteLine($"{e.ChatMessage.Username}: {e.ChatMessage.Message}");
             _chatStreamWriter.Flush();
+            _messageReceivedHandlerTimer.Stop();
         }
 
         private void OnWhisperReceivedHandler(object sender, OnWhisperReceivedArgs e)
         {
+            _whisperReceivedHandlerTimer.Start();
             _chatStreamWriter.WriteLine($"{e.WhisperMessage.Username}: {e.WhisperMessage.Message}");
             _chatStreamWriter.Flush();
+            _whisperReceivedHandlerTimer.Stop();
         }
 
         public void Stop()
         {
             _client.Disconnect();
             _chatStreamWriter.Dispose();
+            _logStreamWriter.WriteLine(_logHandlerTimer.GetSummary());
+            _logStreamWriter.WriteLine(_messageReceivedHandlerTimer.GetSummary());
+            _logStreamWriter.WriteLine(_whisperReceivedHandlerTimer.GetSummary());
             _logStreamWriter.Dispose();
         }
     }
