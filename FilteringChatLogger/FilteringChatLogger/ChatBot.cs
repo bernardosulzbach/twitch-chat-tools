@@ -8,18 +8,19 @@ using TwitchLib.Communication.Models;
 
 namespace FilteringChatLogger
 {
-    internal class ChatBot
+    public class ChatBot
     {
         private const string TextFileExtension = ".txt";
         private readonly StreamWriter _chatStreamWriter;
 
         private readonly TwitchClient _client;
-
         private readonly SectionTimer _logHandlerTimer = new SectionTimer("OnLogHandler");
 
         private readonly StreamWriter _logStreamWriter;
         private readonly SectionTimer _messageReceivedHandlerTimer = new SectionTimer("OnMessageReceivedHandler");
         private readonly SectionTimer _whisperReceivedHandlerTimer = new SectionTimer("OnWhisperReceivedHandler");
+
+        public bool IsRunning = true;
 
         public ChatBot(in Settings settings, string channel)
         {
@@ -92,6 +93,7 @@ namespace FilteringChatLogger
             _logStreamWriter.WriteLine(_messageReceivedHandlerTimer.GetSummary());
             _logStreamWriter.WriteLine(_whisperReceivedHandlerTimer.GetSummary());
             _logStreamWriter.Dispose();
+            IsRunning = false;
         }
     }
 }

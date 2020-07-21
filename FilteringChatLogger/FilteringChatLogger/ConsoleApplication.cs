@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace FilteringChatLogger
@@ -30,20 +32,30 @@ namespace FilteringChatLogger
 
             var channel = args[1];
 
-            var bot = new ChatBot(settings, channel);
-            Console.WriteLine("Enter 'stop' to stop the application.");
-            while (true)
+            var chatBot = new ChatBot(settings, channel);
+
+            var commandList = new List<Command>();
+            commandList.Add(new Command("help", "Prints the available commands.", chatBot =>
+            {
+                var maxLength = commandList.Select(command => command.Name.Length).Max();
+                foreach (var command in commandList) Console.WriteLine($"  {command.Name.PadRight(maxLength + 10)} {command.Description}");
+            }));
+            commandList.Add(new Command("stop", "Stops the client.", chatBot => { chatBot.Stop(); }));
+            Console.WriteLine("Enter help to see the available commands.");
+            while (chatBot.IsRunning)
             {
                 Console.Write("> ");
                 var line = Console.ReadLine();
-                if (line == "stop")
-                {
-                    Console.WriteLine("Stopping the bot...");
-                    bot.Stop();
-                    break;
-                }
+                var foundMatchingCommand = false;
+                foreach (var command in commandList)
+                    if (command.Matches(line))
+                    {
+                        foundMatchingCommand = true;
+                        command.Execute(chatBot);
+                        break;
+                    }
 
-                Console.WriteLine("Could not understand that.");
+                if (!foundMatchingCommand) Console.WriteLine("No command matched that.");
             }
         }
 
