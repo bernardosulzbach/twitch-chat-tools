@@ -22,7 +22,6 @@ namespace FilteringChatLogger
             {
                 var jsonText = File.ReadAllText(pathToSettings, Encoding.UTF8);
                 settings = Settings.FromJson(jsonText);
-                Console.WriteLine(settings.ChatPath);
             }
             catch
             {
