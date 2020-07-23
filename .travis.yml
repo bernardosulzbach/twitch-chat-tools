@@ -11,6 +11,7 @@ addons:
       secure: "q0J5B1Qw4C7H+58paBPIggEmHpslOiOdJQyHPkQPTlC/A87H6k/U0VWiHYMLzQ6IAk0wwzkBcodVy1qY1fvnEkNqmgUnzFqqExicoOyratbjhWF1/TU+7vUsAZShV+aG7C+Dz5CK76CN/kFKNP4OR/26/y/vLD2gD5InXRyRCkyxFFJYXFT6QhLNe73ym7LRAjopBYkEcjBOzYBIVw5a77U2Zkt5j1otZZoiviO5D2sxDyF/ZQOHWtwLzhBdNiyb2M7uJxyH8ObtDO8pTwbomRMpIYAlPLd3fYVMVm3ubiNp9248ZM3zGDW6HYm5znWEMy4D+1JV+mBeRL5xb05B7nwnPaIEHno1C1mhfohTzYp0I3BybhUTMGpiE3YzflhzOqobXflwUOYpWMZ+JdCwq/aoi0GYpr1nfDLhcF7YPOWq4qoWeBx6D+UVq+GH9B/tKVIBm6ge2ttKT42/F6JFE0Jf415JCzuONchGrTGDogvAP5MlUsBy7ERbFWh4BCJhHoPqa2fvrYt8/kVsNUVy5i2ogNjHAEQTXwKLcJeMiwt+tYv8rcp5oEt5cxMsxvH7wvEUr7jbopACmM7ySpiSxn5dDaDvjj8cFbTNj2k4C4D+o09o9LNwOhud3NLUyopfkXOyxjtLMxnqDn0McrFCoOTp3De+/Nxakts6MyeZ9uo="
 
 install:
+  - git fetch origin master
   - cd FilteringChatLogger || exit 1
 
 script:
